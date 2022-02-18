@@ -1,5 +1,3 @@
-<!--https://smarti.tistory.com/139#google_vignette-->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,16 +10,31 @@
 	</head>
 	<body>
         <div id="main">
-            <div id="page1" class="page">
-                
+            <div id="header">
+                <div id="header_buttons">
+                    <input type="button" class="header_button green" onclick="press(1)">
+                    <input type="button" class="header_button yellow" onclick="press(2)">
+                    <input type="button" class="header_button red" onclick="press(3)">
+                </div>
             </div>
-            <div id="page2" class="page">
-                <div id="left_arrow"></div>
-                <div id="right_arrow"></div>
+            <div id="menu1" class="menu hide">
+                <ul>
+                    <li>메뉴 1</li>
+                    <li>메뉴 2</li>
+                    <li>메뉴 3</li>
+                </ul>
             </div>
-            <div id="page3" class="page">
-            
+            <div id="menu2" class="menu hide">
+                <ul>
+                    <li>메뉴 1</li>
+                    <li>메뉴 2</li>
+                    <li>메뉴 3</li>
+                </ul>
+            </div>
+            <div id="section">
+                <div id="section-text">test 테스트</div>
             </div>
         </div>
 	</body>
+    <script type="text/javascript" src="src/index.js"></script>
 </html>
