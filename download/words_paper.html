@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>단어장(인쇄용)</title>
+    </head>
+    <body>
+        <input type="file" onchange="reloadWords(this.files[0])">
+        <input type="button" value="표 만들기" onclick="mixWords()">
+        <input type="button" value="인쇄" onclick="print()">
+        <div id="words"></div>
+    </body>
+    <script>
+        let words=[];
+        function reloadWords(file){
+            var r=new FileReader();
+            r.onload=function(){
+                words=r.result.split("\n");
+            }
+            r.readAsText(file, "utf-8");
+        }
+
+        function mixWords(){
+            for(var i=0; i<words.length; i++) words[i]=words[i].split("/")[0];
+            for(var i=0; i<words.length; i++){
+                var r=Math.floor(Math.random()*words.length);
+                var tmp=words[r];
+                words[r]=words[i];
+                words[i]=tmp;
+            }
+            drawTable();
+        }
+
+        function drawTable(){
+            var tt="<table>";
+            var cnt=0;
+            for(var i=0; i<Math.floor(words.length/2); i++){
+                tt+="<tr>";
+                tt+="<td class='word'>"+words[cnt]+"</td><td class='blank'></td>";
+                tt+="<td class='word'>"+words[cnt+1]+"</td><td class='blank'></td>";
+                cnt+=2;
+                tt+="</tr>";
+            }
+            if(words.length%2){
+                tt+="<tr>";
+                tt+="<td class='word'>"+words[cnt]+"</td><td class='blank'></td>";
+                tt+="</tr>";
+            }
+            tt+="</table>";
+            document.querySelector("#words").innerHTML=tt;
+        }
+    </script>
+    <style>
+        table{
+            border-collapse:collapse;
+        }
+        .word{
+            background-color:skyblue;
+            font-size:14pt;
+            width:200px;
+            height:50px;
+            text-align:center;
+            border:1px solid black;
+        }
+        .blank{
+            background-color:white;
+            width:200px;
+            height:50px;
+            border:1px solid black;
+        }
+    </style>
+</html>

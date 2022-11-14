@@ -44,8 +44,11 @@ html, body{
     margin:15px;
 }
 #section-text{
-    position:absolute;
     z-index:0;
+}
+
+#guide-video{
+    width:800px;
 }
 
 .menu{

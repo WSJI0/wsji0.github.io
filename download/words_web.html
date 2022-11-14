@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>단어장(웹)</title>
+    </head>
+    <body>
+        <input type="file" onchange="reloadWords(this.files[0])">
+        <input type="button" value="표 만들기" onclick="mixWords()">
+        <input type="button" value="정답확인" onclick="check()">
+        <div id="words"></div>
+    </body>
+    <script>
+        let words=[];
+        function reloadWords(file){
+            var r=new FileReader();
+            r.onload=function(){
+                words=r.result.split("\n");
+                for(var i=0; i<words.length; i++){
+                    words[i]=words[i].split("/");
+                    words[i][1]=words[i][1].split("\r")[0];
+                }
+            }
+            r.readAsText(file, "utf-8");
+        }
+
+        function mixWords(){
+            for(var i=0; i<words.length; i++){
+                var r=Math.floor(Math.random()*words.length);
+                var tmp=words[r];
+                words[r]=words[i];
+                words[i]=tmp;
+            }
+            drawTable();
+        }
+
+        function drawTable(){
+            var tt="<table>";
+            var cnt=0;
+            for(var i=0; i<Math.floor(words.length/2); i++){
+                tt+="<tr>";
+                tt+="<td class='word'>"+words[cnt][0]+"</td><td class='blank'><input type='text' id='blank"+cnt+"'></td>";
+                tt+="<td class='word'>"+words[cnt+1][0]+"</td><td class='blank'><input type='text' id='blank"+(cnt+1)+"'></td>";
+                cnt+=2;
+                tt+="</tr>";
+            }
+            if(words.length%2){
+                tt+="<tr>";
+                tt+="<td class='word'>"+words[cnt][0]+"</td><td class='blank'><td class='blank'><input type='text' id='blank"+cnt+"'></td>";
+                tt+="</tr>";
+            }
+            tt+="</table>";
+            document.querySelector("#words").innerHTML=tt;
+        }
+
+        function check(){
+            for(var i=0; i<words.length; i++){
+                var cur=document.querySelector("#blank"+i);
+                cur.value=cur.value.replaceAll(" ", "");
+                if(cur.value==words[i][1].replaceAll(" ", "")){
+                    cur.classList.add("green");
+                } else{
+                    cur.classList.add("red");
+                    cur.value+="  (정답 : "+words[i][1]+")";
+                }
+            }
+        }
+    </script>
+    <style>
+        table{
+            border-collapse:collapse;
+        }
+        .word{
+            background-color:skyblue;
+            font-size:14pt;
+            width:300px;
+            height:50px;
+            text-align:center;
+            border:1px solid black;
+        }
+        .blank{
+            background-color:white;
+            width:300px;
+            height:50px;
+            overflow:hidden;
+            border:1px solid black;
+        }
+        .blank input{
+            width:100%;
+            height:100%;
+            font-size:14pt;
+            outline:none;
+            border:none;
+        }
+
+        .green{
+            background-color:greenyellow;
+        }
+        .red{
+            background-color:orangered;
+        }
+    </style>
+</html>
