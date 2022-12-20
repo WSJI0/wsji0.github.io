@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="board"></div><br>
+        <input type="button" onclick="mix()" value="섞기" style="width:200px; font-size:20pt;">
+    </body>
+
+    <script>
+        var board=[], visited=[];
+        var selected=[-1, -1];
+        var left=120;
+
+        function init(){
+            var tmp="<table>";
+            for(var i=0; i<8; i++){
+                tmp+="<tr>";
+                for(var j=0;j<15; j++){
+                    tmp+="<td class='block' id='b"+(i+1)+"a"+(j+1)+"' onclick='sel("+(i+1)+", "+(j+1)+")'></td>";
+                } tmp+="</tr>";
+            } tmp+="</table>";
+            document.querySelector("#board").innerHTML=tmp;
+
+            for(var i=0; i<10; i++){
+                board.push([]); 
+                visited.push([]);
+                for(var j=0; j<17; j++){
+                    board[i].push(0); 
+                    visited[i].push(0); 
+                }
+            }
+
+            setBoard();
+        } init();
+
+        function setBoard(){
+            var blocks=[];
+            for(var i=1; i<=20; i++){
+                for(var j=0; j<6; j++) blocks.push(i);
+            }
+            for(var j=0; j<5; j++)
+            for(var i=0; i<120; i++){
+                var r=Math.floor(Math.random()*120);
+                var tmp=blocks[i];
+                blocks[i]=blocks[r];
+                blocks[r]=tmp;
+            }
+
+            var cnt=0;
+            for(var i=1; i<=8; i++){
+                for(var j=1; j<=15; j++){
+                    board[i][j]=blocks[cnt];
+                    get(i, j).classList.add("b"+blocks[cnt++])
+                }
+            }
+        }
+
+        function get(y, x){
+            return document.querySelector("#b"+y+"a"+x);
+        }
+
+        function sel(y, x){
+            if(board[y][x]==0) return;
+            if(selected[0]==-1){
+                get(y, x).classList.add("sel");
+                selected=[y, x];
+            } else{
+                if(canBreak(y, x, selected[0], selected[1])){
+                    deleteBlock(y, x);
+                    deleteBlock(selected[0], selected[1]);
+                    left-=2;
+                    if(left==0){
+                        document.querySelector("#board").innerHTML="<input type='button' onclick='location.reload();' value='다시하기' id='reBtn'>";
+                    }
+                } else{
+                    get(selected[0], selected[1]).classList.remove("sel");
+                }
+                selected=[-1, -1];
+            }
+        }
+
+        function visitedClear(){
+            for(var i=0; i<10; i++){
+                for(var j=0; j<17; j++) visited[i][j]=5;
+            }
+            ok=false;
+        }
+
+        function deleteBlock(y, x){
+            get(y, x).classList.remove("b"+board[y][x]);
+            board[y][x]=0;
+        }
+
+        var mv=[
+            [0, 1], [0, -1], [1, 0], [-1, 0]
+        ];
+        var ok=false;
+        function canBreak(y1, x1, y2, x2){
+            if(board[y1][x1]!=board[y2][x2]) return false;
+            if(y1==y2 && x1==x2) return false;
+            
+            if(Math.abs(y1-y2)+Math.abs(x1-x2)==1) return true;
+
+            for(var i=0; i<4; i++){
+                visitedClear(); visited[y1][x1]=1;
+                solve(y1, x1, y2, x2, 0, i);
+                console.log(visited);
+                if(ok) return true;
+            }
+
+            return false;
+        }
+
+        function solve(y1, x1, y2, x2, cur, dir){
+            for(var i=0; i<4; i++){
+                ny=y1+mv[i][0];
+                nx=x1+mv[i][1];
+                if(0<=ny && ny<10 && 0<=nx && nx<17){
+                    if(i==dir){
+                        if(ny==y2 && nx==x2) ok=true;
+                        if(visited[ny][nx]<cur+1 || board[ny][nx]!=0) continue;
+                        visited[ny][nx]=cur+1;
+                        solve(ny, nx, y2, x2, cur, dir);
+                    } else{
+                        if(cur<=1 && ny==y2 && nx==x2) ok=true;
+                        if(visited[ny][nx]<cur+2 || board[ny][nx]!=0) continue;
+                        if(cur<=1){
+                            visited[ny][nx]=cur+1+1;
+                            solve(ny, nx, y2, x2, cur+1, i);
+                        }
+                    } 
+                }
+            }
+        }
+
+        function mix(){
+            var qq=[];
+            for(var i=1; i<=8; i++){
+                for(var j=1; j<=15; j++){
+                    if(board[i][j]!=0){
+                        qq.push([i, j]);
+                        get(i, j).classList.remove("b"+board[i][j]);
+                    } 
+                }
+            }
+
+            for(var i=0; i<qq.length; i++){
+                var r=Math.floor(Math.random()*qq.length);
+                var tmp=board[qq[i][0]][qq[i][1]];
+                board[qq[i][0]][qq[i][1]]=board[qq[r][0]][qq[r][1]];
+                board[qq[r][0]][qq[r][1]]=tmp;
+            }
+
+            for(var i=1; i<=8; i++){
+                for(var j=1; j<=15; j++){
+                    get(i, j).classList.add("b"+board[i][j])
+                }
+            }
+        }
+    </script>
+    <style>
+        html, body{
+            text-align:center;
+            height:100%;
+        }
+        #board{
+            margin:40px auto;
+            width:1500px;
+        }
+
+        table{
+            border-collapse:collapse;
+        }
+
+        .block{
+            width:100px;
+            height:100px;
+            border:none;
+            outline:none;
+            padding:0px;
+            background-size:cover;
+        }
+
+        #reBtn{
+            font-size:50pt;
+            width:100%;
+        }
+
+        .b1{ background-image:url("block/block1.png"); }
+        .b2{ background-image:url("block/block2.png"); }
+        .b3{ background-image:url("block/block3.png"); }
+        .b4{ background-image:url("block/block4.png"); }
+        .b5{ background-image:url("block/block5.png"); }
+        .b6{ background-image:url("block/block6.png"); }
+        .b7{ background-image:url("block/block7.png"); }
+        .b8{ background-image:url("block/block8.png"); }
+        .b9{ background-image:url("block/block9.png"); }
+        .b10{ background-image:url("block/block10.png"); }
+        .b11{ background-image:url("block/block11.png"); }
+        .b12{ background-image:url("block/block12.png"); }
+        .b13{ background-image:url("block/block13.png"); }
+        .b14{ background-image:url("block/block14.png"); }
+        .b15{ background-image:url("block/block15.png"); }
+        .b16{ background-image:url("block/block16.png"); }
+        .b17{ background-image:url("block/block17.png"); }
+        .b18{ background-image:url("block/block18.png"); }
+        .b19{ background-image:url("block/block19.png"); }
+        .b20{ background-image:url("block/block20.png"); }
+
+        .zero{
+            opacity:0;
+        }
+
+        .sel{
+            filter:brightness(60%);
+        }
+    </style>
+</html>
