@@ -4,16 +4,28 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <div id="board"></div><br>
-        <input type="button" onclick="mix()" value="섞기" style="width:200px; font-size:20pt;">
+        <div id="board"><input type="button" id='reBtn' value="시작" onclick="init(200)"></div><br>
+        <!--<input type="button" onclick="mix()" value="섞기" style="width:200px; font-size:20pt;">-->
+        <div id="time">
+            <div id="progress_bar"></div>
+        </div>
+        <input type="button" onclick="bgm(this)" style="height:40px; font-size:20pt;" value="배경음악 끄기"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" onclick="mix()" style="height:40px; font-size:20pt;" value="섞기">
     </body>
 
     <script>
         var board=[], visited=[];
         var selected=[-1, -1];
         var left=120;
+        var timeLeft=200;
+        var timeLimit=200;
+        var curDifficulty=200;
 
-        function init(){
+        var audio=new Audio("audio/pop.mp3");
+        var bgAudio=new Audio("audio/bgAudio.mp3");
+        var loop=null;
+
+        function init(tt){
             var tmp="<table>";
             for(var i=0; i<8; i++){
                 tmp+="<tr>";
@@ -33,7 +45,18 @@
             }
 
             setBoard();
-        } init();
+
+            timeLimit=tt;
+            timeLeft=tt;
+            left=120;
+
+            if(tt==200){
+                bgAudio.loop=true;
+                bgAudio.volume=0.5;
+                bgAudio.play();
+            }
+            loop=setInterval(function(){ updateTime(); }, 1000);
+        } 
 
         function setBoard(){
             var blocks=[];
@@ -70,9 +93,13 @@
                 if(canBreak(y, x, selected[0], selected[1])){
                     deleteBlock(y, x);
                     deleteBlock(selected[0], selected[1]);
+                    audio.currentTime=0;
+                    audio.play();
                     left-=2;
                     if(left==0){
-                        document.querySelector("#board").innerHTML="<input type='button' onclick='location.reload();' value='다시하기' id='reBtn'>";
+                        curDifficulty-=10;
+                        document.querySelector("#board").innerHTML="<input type='button' onclick='init("+curDifficulty+")' value='다음 단계\n제한 시간 : "+curDifficulty+"초' id='reBtn'>";
+                        clearInterval(loop);
                     }
                 } else{
                     get(selected[0], selected[1]).classList.remove("sel");
@@ -135,6 +162,11 @@
             }
         }
 
+        function gameOver(){
+            document.querySelector("#board").innerHTML="<font size='30pt'>GAME OVER</font><br><br><input type='button' value='다시하기' onclick='location.reload()' id='reBtn'>";
+            clearInterval(loop);
+        }
+
         function mix(){
             var qq=[];
             for(var i=1; i<=8; i++){
@@ -159,6 +191,28 @@
                 }
             }
         }
+
+        function updateTime(){
+            if(--timeLeft<=0) gameOver();
+
+            if(timeLeft==(timeLimit/2)) mix();
+
+            document.querySelector("#progress_bar").style.width=((timeLeft/timeLimit)*1500)+"px";
+        }
+
+        var bgg=true;
+        function bgm(t){
+            bgg^=1;
+            if(!bgg){
+                bgAudio.volume=0;
+                t.value="배경음악 켜기";
+            }
+            else{
+                bgAudio.volume=0.5;
+                t.value="배경음악 끄기";
+            }
+        }
+
     </script>
     <style>
         html, body{
@@ -215,6 +269,18 @@
 
         .sel{
             filter:brightness(60%);
+        }
+
+        #time{
+            width:1500px;
+            height:10px;
+            margin:0 auto;
+        }
+
+        #progress_bar{
+            background-color:black;
+            width:100%;
+            height:100%;
         }
     </style>
 </html>
