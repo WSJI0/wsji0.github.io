@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div id="board"></div>
+        <br><br>
+        지뢰 갯수 : 160 / 깃발 갯수 : <span id="flagCnt">0</span>
+    </body>
+    <script>
+        var XSIZE=40, YSIZE=25, MINE=160;
+        var mineAudio=new Audio("audio/explode.mp3");
+
+        function init(){
+            var tx="<table>";
+            for(var y=0; y<YSIZE; y++){
+                tx+="<tr>";
+                for(var x=0; x<XSIZE; x++){
+                    tx+="<td class='block' id='s"+y+"a"+x+"' onclick='sel("+y+", "+x+")'></td>";
+                } tx+="</tr>";
+            }
+            document.getElementById("board").innerHTML=tx;
+        }
+
+        var visited=[];
+        var board=[];
+
+        function game(){
+            for(var y=0; y<YSIZE; y++){
+                visited.push([]); board.push([]);
+                for(var x=0; x<XSIZE; x++){
+                    visited[y].push(0);
+                    board[y].push(0);
+                }
+            }
+
+            var tmp=MINE;
+            while(tmp){
+                var ry=Math.floor(Math.random()*YSIZE);
+                var rx=Math.floor(Math.random()*XSIZE);
+                if(board[ry][rx]) continue;
+                board[ry][rx]=1; tmp--;
+            }
+
+            for(var y=0; y<YSIZE; y++){
+                for(var x=0; x<XSIZE; x++){
+                    (function(y, x){
+                        document.getElementById("s"+y+"a"+x).addEventListener('mousedown', function(e){
+                            if(e.button==2) flag(y, x);
+                        }, false);
+                    })(y, x);
+                    document.getElementById("s"+y+"a"+x).addEventListener('contextmenu', function(e){ e.preventDefault(); }, false);
+                }
+            }
+        }
+
+        var move=[
+            [0, 1], [1, 0], [0, -1], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]
+        ];
+        var number=[
+            "", "<font color='blue'>1</font>", "<font color='green'>2</font>", "<font color='red'>3</font>", "<font color='navy'>4</font>", 
+            "<font color='darkred'>5</font>", "<font color='cyan'>6</font>", "<font color='red'>7</font>", "<font color='red'>8</font>"
+        ];
+        function gameOver(){
+            for(var y=0; y<YSIZE; y++){
+                for(var x=0; x<XSIZE; x++){
+                    if(board[y][x]) document.getElementById("s"+y+"a"+x).classList.add("mine");
+                }
+            }
+            mineAudio.play();
+        }
+        
+        var solved=0;
+        function sel(y, x){
+            if(visited[y][x]) return;
+            visited[y][x]=1;
+            if(++solved==YSIZE*XSIZE-MINE) alert("YOU WIN!");
+
+            if(board[y][x]){
+                gameOver();
+                return;
+            }
+
+            var cnt=0;
+            for(var i=0; i<8; i++){
+                var my=move[i][0]+y, mx=move[i][1]+x;
+                if(0<=my && my<YSIZE && 0<=mx && mx<XSIZE){
+                    if(board[my][mx]) cnt++;
+                }
+            }
+            document.getElementById("s"+y+"a"+x).style="background-color:white";
+            document.getElementById("s"+y+"a"+x).innerHTML=number[cnt];
+            if(cnt==0){
+                for(var i=0; i<8; i++){
+                    var my=move[i][0]+y, mx=move[i][1]+x;
+                    if(0<=my && my<YSIZE && 0<=mx && mx<XSIZE){
+                        sel(my, mx);
+                    }
+                }
+            }
+        }
+        
+        var flags=0;
+        function flag(y, x){
+            if(document.getElementById("s"+y+"a"+x).className=="block flag"){
+                document.getElementById("s"+y+"a"+x).className="block";
+                flags--;
+            }
+            else{
+                document.getElementById("s"+y+"a"+x).className="block flag";
+                flags++;
+            }
+            document.querySelector("#flagCnt").innerHTML=flags;
+        }
+
+        init();
+        game();
+    </script>
+    <style>
+        html, body{
+            width:100%;
+            height:100%;
+            padding:0;
+            text-align:center;
+        }
+
+        #board{
+            margin:20px auto;
+            width:1000px;
+        }
+
+        table{
+            border-collapse:collapse;
+        }
+        td{
+            background-color:rgb(100, 100, 100);
+            width:25px;
+            height:25px;
+            border:1px solid black;
+            font-size:11pt;
+            text-align:center;
+            padding:0;
+        }
+
+        .flag{
+            background-image:url("img/flag.png");
+            background-size:cover;
+        }
+
+        .mine{
+            background-image:url("img/mine.png");
+            background-size:cover;
+        }
+    </style>
+</html>
