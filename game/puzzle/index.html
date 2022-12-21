@@ -97,7 +97,10 @@
                     audio.play();
                     left-=2;
                     if(left==0){
+                        if(timeLeft>=60) curDifficulty-=10;
+                        if(timeLeft>=30) curDifficulty-=10;
                         curDifficulty-=10;
+                        curDifficulty=Math.max(50, curDifficulty);
                         document.querySelector("#board").innerHTML="<input type='button' onclick='init("+curDifficulty+")' value='다음 단계\n제한 시간 : "+curDifficulty+"초' id='reBtn'>";
                         clearInterval(loop);
                     }
