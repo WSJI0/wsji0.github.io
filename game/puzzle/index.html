@@ -30,7 +30,7 @@
             for(var i=0; i<8; i++){
                 tmp+="<tr>";
                 for(var j=0;j<15; j++){
-                    tmp+="<td class='block' id='b"+(i+1)+"a"+(j+1)+"' onclick='sel("+(i+1)+", "+(j+1)+")'></td>";
+                    tmp+="<td class='block' id='b"+(i+1)+"a"+(j+1)+"' onmousedown='sel("+(i+1)+", "+(j+1)+")'></td>";
                 } tmp+="</tr>";
             } tmp+="</table>";
             document.querySelector("#board").innerHTML=tmp;
