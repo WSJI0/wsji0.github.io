@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="message.css">
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <title>공가치</title>
+</head>
+<body>
+	<script src="vue.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<header>
+		<div id="wrapper">
+			<div class="header-logo" onclick="location.href='index.html'">
+				공가치
+			</div>
+			<nav>
+				<ul class="header-menu">
+					<li><a href="profile.html">내 프로필</a></li>
+					<li><a href="login.html">로그인</a></li>
+					<li><a href="find.html">둘러보기</a></li>
+				</ul>
+			</nav>
+			
+		</div>
+	</header>
+	
+	<div id="section">
+		<div id="content">
+			<div class="content-main">
+				<!--이 부분부터 작성-->
+				
+				<div id="message-header">
+					<div class="opponent-profile">
+						<div id="opponent-img"><img src="new-profile.png"></div>
+						<div id="opponent-name">작성</div>
+					</div>
+					<div class="opponent-profile  profile-selected">
+						<div id="opponent-img"><img src="ssw-pro.jpg"></div>
+						<div id="opponent-name">SpicyKong</div>
+					</div>
+					<div class="opponent-profile">
+						<div id="opponent-img"><img src="empty-pro.png"></div>
+						<div id="opponent-name">test1</div>
+					</div>
+					<div class="opponent-profile">
+						<div id="opponent-img"><img src="empty-pro.png"></div>
+						<div id="opponent-name">test2</div>
+					</div>
+					<div class="opponent-profile">
+						<div id="opponent-img"><img src="empty-pro.png"></div>
+						<div id="opponent-name">test3</div>
+					</div>
+				</div>
+				<div id="message-main">
+					<div class="message op-message">
+						<div id="opponent-img"><img src="ssw-pro.jpg"></div>
+						<div class="message-content op">
+							<div id="message-text">test</div>
+							<div id="message-time">2020년 8월 9일 9:30 p.m</div>
+						</div>
+					</div>
+					<div class="message my-message">
+						<div class="message-content my">
+							<div id="message-text">테스트</div>
+							<div id="message-time">2020년 8월 9일 9:30 p.m</div>
+						</div>
+						<div id="profile-img"><img src="profile-img.png"></div>
+					</div>
+					<div class="message op-message">
+						<div id="opponent-img"><img src="ssw-pro.jpg"></div>
+						<div class="message-content op">
+							<div id="message-text">testtttttttttttttttttttttttttttttttttttttttt<br>tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt</div>
+							<div id="message-time">2020년 8월 9일 9:30 p.m</div>
+						</div>
+					</div>
+					<div class="message my-message">
+						<div class="message-content my">
+							<div id="message-text">asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</div>
+							<div id="message-time">2020년 8월 9일 9:30 p.m</div>
+						</div>
+						<div id="profile-img"><img src="profile-img.png"></div>
+					</div>
+				</div>
+				<div id="message-input">
+					<form action="" method="post">
+						<textarea class="message-input" name="msg_value" autofocus ></textarea>
+						<button class="msg-send">🗨️</button>
+					</form>
+				</div>
+				
+				<!--여기까지-->
+			</div>
+		</div>
+	</div>
+	<script src="message.js"></script>
+</body>
+</html>

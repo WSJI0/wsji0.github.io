@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="profile.css">
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	<title>공가치</title>
+</head>
+
+<body>
+	<script src="vue.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<header>
+		<div id="wrapper">
+			<div class="header-logo" onclick="location.href='index.html'">
+				공가치
+			</div>
+			<nav>
+				<ul class="header-menu">
+					<li><a href="profile.html">내 프로필</a></li>
+					<li><a href="login.html">로그인</a></li>
+					<li><a href="find.html">둘러보기</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div id="section">
+		<div id="content">
+			<div id="profile-background">
+				<div id="profile-img">
+					<!--프사-->
+					<img src="profile-img.png">
+				</div>
+			</div>
+
+			<div class="content-main">
+
+				<div id="profile-header">
+					<!--닉네임-->
+					<div class="profile-name">lifedev</div>
+					<!--소개-->
+					<div class="profile-detail">프론트엔드</div>
+					<div class="profile-scores">
+
+						<div class="profile-score star">
+							<img src="star.png" title="좋아요">
+							<div id="number">123</div>
+						</div>
+						<!--
+						<div class="profile-score human">
+							<img src="human.png" title="같이 한 사람">
+							<div id="number">156</div>
+						</div>
+						-->
+						<!--onclick 부분은 임시로 해놓았습니다-->
+						<div class="profile-score project" onclick="location.href='?page=project'">
+							<img src="project.png" title="참여한 프로젝트">
+							<div id="number">82</div>
+						</div>
+						<div class="profile-score list" onclick="location.href='?page=write'">
+							<img src="list.png" title="작성한 글">
+							<div id="number">12</div>
+						</div>
+
+						<!--이 부분 부터는 본인프로필에서만 볼 수 있음-->
+						<div class="profile-score list" onclick="location.href='?page=setting'">
+							<img src="setting.png" title="설정">
+							<div id="number"></div>
+						</div>
+						<!--여기까지-->
+
+						<!--
+						<div class="profile-score comment">
+							<img src="comment.png" title="작성한 댓글">
+							<div id="number">56</div>
+						</div>
+						-->
+					</div>
+				</div>
+				<div id="profile-main">
+
+					<!--START 이 부분이 page값에 따라 바뀝니다-->
+
+					<div id="setting-main">
+	<div class="user-profile setting-box">
+		<form action="" method="post" id="user_profile">
+			<div class="user-name setting">
+				<label for="user-name" class="setting-label">이름</label>
+				<input type="text" name="user_name" class="setting-input" id="user-name" value="lifedev" maxlength="20" required>
+			</div>
+			<div class="user-description setting">
+				<label for="user-description" class="setting-label">소갯말</label>
+				<input type="text" name="user_description" class="setting-input" id="user-description" value="프론트엔드" maxlength="20">
+			</div>
+			<div class="user-profile-img setting">
+				<label for="user-profile-img" class="setting-label">프로필 사진</label>
+				<!--<img src="profile-img.png" id="user-profile-img">-->
+				<input type="file" id="user_profile_img" name="user_profile_img" onchange="cropImage()">
+				<input type="hidden" id="imgSize" name="imgSize" value="ERROR">
+				<div class="img-crop popup invisible">
+					<img src="profile-img.png" class="popup-img" id="imgPath">
+
+				</div>
+			</div>
+			<div class="user-background-img setting">
+				<label for="user-profile-img" class="setting-label">배경 사진</label>
+				<input type="file" class="setting-file" name="user_background_img">
+			</div>
+			<div class="user-profile-submit setting">
+				<button class="setting-btn">변경사항 저장</button>
+			</div>
+		</form>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+	var imgWidth, imgHeight, startX, startY;
+	
+	function cropImage() {
+		var input = document.getElementById("user_profile_img");
+		var fReader = new FileReader();
+		fReader.readAsDataURL(input.files[0]);
+		fReader.onloadend = function(e) {
+			var img=new Image();
+			img.src=e.target.result;
+			img.onload=function(){
+				imgWidth=img.width;
+				imgHeight=img.height;
+				if(imgWidth>=imgHeight){
+					imgWidth=(imgWidth/imgHeight)*500;
+					imgHeight=500;
+				}else{
+					imgHeight=(imgHeight/imgWidth)*500;
+					imgWidth=500;
+				}
+			}
+			document.getElementById("imgPath").src = e.target.result;
+			$('.img-crop').toggleClass('invisible');
+			startX=$('.img-crop').offset().left;
+			startY=$('.img-crop').offset().top;
+		}
+	}
+	
+	var imgSize = 500;
+	var imgX=0; imgY=0;
+	$('.img-crop').on({
+		'mousewheel DOMMouseScroll': function(e) {
+			e.preventDefault();
+			if (e.originalEvent.deltaY > 0) {
+				imgSize = Math.max(500, imgSize - 25);
+			} else if (e.originalEvent.deltaY < 0) {
+				imgSize += 25;
+			}
+			$('.popup-img').css('height', imgSize + 'px');
+			$('#imgSize').val([imgX, imgY, imgSize].join("/"));
+		}
+	});
+	
+	var crop = $('.popup-img');
+	crop.on({
+		'dragenter': function(e) {
+			mouseX = e.clientX;
+			mouseY = e.clientY;
+			imgX = crop.offset().left - startX - 1;
+			imgY = crop.offset().top - startY - 1;
+		},
+		'dragover': function(e) {
+			e.preventDefault();
+			moveX = e.clientX - mouseX;
+			moveY = e.clientY - mouseY;
+			crop.css('left', (imgX+moveX));
+			crop.css('top', (imgY+moveY));
+		},
+		'drop': function(e) {
+			imgX = crop.offset().left - startX - 1;
+			imgY = crop.offset().top - startY - 1;
+			$('#imgSize').val([imgX, imgY, imgSize].join("/"));
+		}
+	});
+
+</script>
+<style>
+	.img-crop {
+		width: 1000px;
+	}
+
+	.popup {
+		position: relative;
+		width: 500px;
+		min-width: 500px;
+		min-height: 500px;
+		margin: 20px auto;
+		border: 1px solid red;
+		text-align: center;
+		overflow: hidden;
+	}
+
+	.popup-img {
+		position: absolute;
+		height: 500px;
+		z-index: 2;
+		left: 0;
+		top: 0;
+	}
+
+	.invisible {
+		display: none;
+	}
+
+</style>
+
+					<!--END-->
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<script src="profile.js"></script>
+</body>
+
+</html>

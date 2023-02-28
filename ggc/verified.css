@@ -1,0 +1,171 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+@font-face {
+	font-family:'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff'); font-weight: normal; font-style: normal; 
+}
+@font-face {
+	font-family:'GMARKET';
+	src:url("GmarketSansTTF/GmarketSansTTFBold.ttf");
+}
+@font-face {
+	font-family:'GMARKET-light';
+	src:url("GmarketSansTTF/GmarketSansTTFMedium.ttf");
+}
+orange{
+	color:#efa100;
+}
+
+/**
+* 헤더
+*/
+header{
+	position:fixed;
+	top:0;
+	background-color:#1C1C1C;
+	padding-left:10px;
+	padding-right:15px;
+	padding-top:5px;
+	padding-bottom:5px;
+	vertical-align:middle;
+	width:100%;
+	height:55px;
+	line-height:55px;
+}
+#wrapper{
+	max-width:1500px;
+	margin:0 auto;
+}
+.header-logo{
+	font-family: 'TmoneyRoundWindExtraBold';
+	font-size:30pt;	
+	color:white;
+	cursor:pointer;
+	vertical-align:middle;
+	padding-left:20px;
+	line-height:55px;
+	float:left;
+	
+}
+.header-menu{
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:15pt;	
+	color:white;
+	cursor:pointer;
+	float:right;
+}
+.header-menu>li{
+	float:left;
+	list-style-type:none;
+}
+a:hover, a:active, a:link, a:visited{
+	line-height:55px;
+	color:white;
+	padding:0 15px; display:block;
+	text-decoration:none;
+}
+
+
+#section{
+}
+
+
+/**
+* 사이드바
+*/
+#side-bar{
+	width:0px;
+	height:100%;
+	background-color:#264653; /* 사이드바 색 */
+	position:fixed;
+	float:left;
+	line-height:200%;
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:10px;
+	overflow:hidden;
+}
+#side-bar>ul>li{
+	/*border-bottom:1px solid #999999;*/
+	margin-bottom:15px;
+}
+#side-bar>ul>li>a:link, #side-bar>ul>li>a:visited{
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:18pt;
+	color:white;
+	text-decoration:none;
+}
+#side-bar>ul>li>a:hover, #side-bar>ul>li>a:active{
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:18pt;
+	color:red;
+	text-decoration:none;
+}
+.close-button{
+	text-align:right;
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:200%;
+	line-height:150%;
+	padding-right:10px;
+	cursor:pointer;
+}
+
+/**
+* 본문
+*/
+#content{
+	height:auto;
+}
+.content-main{
+	width:1500px;
+	margin:0 auto;
+	padding-top:100px;
+	height:100%;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-size:15pt;
+	overflow:hide;
+}
+
+#check{
+	width:700px;
+	margin:250px auto;
+	text-align:center;
+	font-family: 'TmoneyRoundWindExtraBold';
+}
+#check-text{
+	display:inline-block;
+	color:#EFA100;
+	font-size:50pt;
+	line-height:50pt;
+}
+#check-detail{
+	line-height:60pt;
+	width:700px;
+}
+.check-btn{
+	width:150px;
+	padding:8px;
+	margin:0 10px;
+	color:white;
+	font-size:15pt;
+	background-color:black;
+	border-radius:5px;
+	border:0;
+	outline:0;
+}

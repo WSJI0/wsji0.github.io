@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="profile2.css">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	<title>공가치</title>
+</head>
+
+<body>
+	<script src="vue.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<header>
+		<div id="wrapper">
+			<div class="header-logo" onclick="location.href='index.html'">
+				공가치
+			</div>
+			<nav>
+				<ul class="header-menu">
+					<li><a href="profile.html">내 프로필</a></li>
+					<li><a href="login.html">로그인</a></li>
+					<li><a href="find.html">둘러보기</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div id="section">
+		<div id="content">
+			<div id="profile-img">
+				<img src="lifedev.png">
+			</div>
+			<div class="content-main">
+
+				<div id="profile-header">
+					<div class="profile-name">lifedev</div>
+					<div class="profile-detail">프론트엔드 개발자</div>
+					<div class="profile-scores">
+						<div class="profile-score star">
+							<img src="star.png" title="좋아요">
+							<div id="number">123</div>
+						</div>
+						<div class="profile-score human">
+							<img src="human.png" title="같이 한 사람">
+							<div id="number">156</div>
+						</div>
+						<div class="profile-score project">
+							<img src="project.png" title="참여한 프로젝트">
+							<div id="number">82</div>
+						</div>
+					</div>
+				</div>
+				<div id="profile-main">
+					프로필 사진, 배경이미지 선택 가능
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<script src="profile2.js"></script>
+</body></html>

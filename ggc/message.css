@@ -1,0 +1,251 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+@font-face {
+	font-family:'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff'); font-weight: normal; font-style: normal; 
+}
+@font-face {
+	font-family:'GMARKET';
+	src:url("GmarketSansTTF/GmarketSansTTFBold.ttf");
+}
+@font-face {
+	font-family:'GMARKET-light';
+	src:url("GmarketSansTTF/GmarketSansTTFMedium.ttf");
+}
+orange{
+	color:#efa100;
+}
+@-webkit-keyframes extendBtn{
+	from{
+    	width:50px;
+	}
+	to{
+    	width:120px;
+		box-shadow:0 0 3px 3px #AAAAAA;
+  	}
+}
+
+/**
+* 헤더
+*/
+header{
+	position:fixed;
+	top:0;
+	background-color:#1C1C1C;
+	padding-left:10px;
+	padding-right:15px;
+	padding-top:5px;
+	padding-bottom:5px;
+	vertical-align:middle;
+	width:100%;
+	height:55px;
+	line-height:55px;
+}
+#wrapper{
+	max-width:1500px;
+	margin:0 auto;
+}
+.header-logo{
+	font-family: 'TmoneyRoundWindExtraBold';
+	font-size:30pt;	
+	color:white;
+	cursor:pointer;
+	vertical-align:middle;
+	padding-left:20px;
+	line-height:55px;
+	float:left;
+	
+}
+.header-menu{
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:15pt;	
+	color:white;
+	cursor:pointer;
+	float:right;
+}
+.header-menu>li{
+	float:left;
+	list-style-type:none;
+}
+a:hover, a:active, a:link, a:visited{
+	line-height:55px;
+	color:white;
+	padding:0 15px; display:block;
+	text-decoration:none;
+}
+
+
+#section{
+	min-height:750px;
+}
+
+
+/**
+* 사이드바
+*/
+#side-bar{
+	width:0px;
+	height:100%;
+	background-color:#264653; /* 사이드바 색 */
+	position:fixed;
+	float:left;
+	line-height:200%;
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:10px;
+	overflow:hidden;
+}
+#side-bar>ul>li{
+	/*border-bottom:1px solid #999999;*/
+	margin-bottom:15px;
+}
+#side-bar>ul>li>a:link, #side-bar>ul>li>a:visited{
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:18pt;
+	color:white;
+	text-decoration:none;
+}
+#side-bar>ul>li>a:hover, #side-bar>ul>li>a:active{
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:18pt;
+	color:red;
+	text-decoration:none;
+}
+.close-button{
+	text-align:right;
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:200%;
+	line-height:150%;
+	padding-right:10px;
+	cursor:pointer;
+}
+
+/**
+* 본문
+*/
+#content{
+	height:auto;
+}
+.content-main{
+	width:1500px;
+	margin:0 auto;
+	padding-top:50px;
+	height:100%;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-size:15pt;
+	overflow:hide;
+}
+
+.profile-selected{
+	box-shadow:0 10px 0px 0px #FFCCCC;
+}
+#message-header{
+	margin:20px;
+	padding:10px;
+	border-bottom:1px solid #FFCCCC;
+}
+.opponent-profile{
+	display:inline-block;
+	padding:10px;
+}
+#opponent-img{
+	width:100px;
+	height:100px;
+	display:inline-block;
+}#opponent-img>img{ width:inherit; border-radius:50%; }
+#profile-img{
+	width:100px;
+	height:100px;
+	display:inline-block;
+}#profile-img>img{ width:inherit; border-radius:50%; }
+#opponent-name{
+	text-align:center;
+}
+
+#message-main{
+	height:500px;
+	overflow-y:scroll;
+	border:1px solid #FFCCCC;
+	margin:20px;
+	padding:10px;
+}
+#message-main::-webkit-scrollbar{ background-color:white; }
+#message-main::-webkit-scrollbar-thumb{ background-color:#FFCCCC; }
+#message-main::-webkit-scrollbar-track{ background-color:white; }
+.message{
+	margin:20px 0;
+}
+.op-message{
+	text-align:left;
+}
+.my-message{
+	text-align:right;
+}
+.message-content{
+	display:inline-block;
+	min-height:80px;
+	vertical-align:top;
+	padding:10px 20px;
+	margin:0 10px;
+	border-radius:10px;
+}.op{ background-color:blanchedalmond; }.my{ background-color:aliceblue; }
+#message-text{
+	width:600px;
+	text-align:left;
+	word-break:keep-all;
+	word-wrap:break-word;
+	line-height:30px;
+}
+#message-time{
+	width:600px;
+	font-size:10pt;
+	color:gray;
+	vertical-align:bottom;
+	text-align:right;
+	padding-top:35px;
+}
+#message-input{
+	margin:0 10px;
+	padding:10px;
+}
+.message-input{
+	width:1350px;
+	height:100px;
+	font-size:15pt;
+	font-family: 'Nanum Gothic', sans-serif;
+	resize:none;
+	border:1px solid #FFCCCC;
+	outline:0;
+	padding:5px;
+}
+.message-input::-webkit-scrollbar{ background-color:white; }
+.message-input::-webkit-scrollbar-thumb{ background-color:#FFCCCC; }
+.message-input::-webkit-scrollbar-track{ background-color:#DDCCCC; }
+.msg-send{
+	font-family: 'Nanum Gothic', sans-serif;
+	position:absolute;
+	width:100px;
+	height:112px;
+	border:0;
+	outline:0;
+	background-color:#FFCCCC;
+	color:white;
+	font-size:20pt;
+	cursor:pointer;
+}
